@@ -1,0 +1,55 @@
+
+1. prog -> codeBlock
+2. codeBlock -> classOrImplOrFunc codeBlock | ϵ
+3. classOrImplOrFunc -> classDecl | implDef | funcDef
+4. classDecl -> class id classExtension { classBody };
+5. classExtension -> isa id interface
+6. interface -> , id interface | ϵ
+7. classBody -> visibility memberDecl classBody | ϵ
+8. implDef -> implement id { implBody }
+9. implBody -> funcDef implBody | ϵ
+10. funcDef -> funcHead funcBody
+11. visibility -> public | private
+12. memberDecl -> funcDecl | attributeDecl
+13. funcDecl -> funcHead ;
+14. funcHead -> func id ( fParams ) => returnType | constructor ( fParams )
+15. funcBody -> { funcContents }
+16. funcContents -> varDeclOrStmt funcContents | ϵ
+17. varDeclOrStmt -> localVarDecl | statement
+18. attributeDecl -> attribute varDecl
+19. localVarDecl -> local varDecl
+20. varDecl -> id : type arrLength ;
+21. arrLength -> arraySize arrLength | ϵ
+22. statement -> assignStat ; | if ( relExpr ) then statBlock else statBlock ; | while ( relExpr ) statBlock ; | read ( variable ) ; | write ( expr ) ;| return ( expr ) ; | functionCall ;
+23. assignStat -> variable assignOp expr
+24. statBlock -> { statBlockContents } | statement | ϵ
+25. statBlockContents -> statement statBlockContents | ϵ
+26. expr -> arithExpr | relExpr
+27. relExpr -> arithExpr relOp arithExpr
+28. arithExpr -> term arithOperations
+29. arithOperations -> addOp term arithOperations | ϵ
+30. sign -> +|–
+31. term -> factor termOperations
+32. termOperations -> multOp factor termOperations | ϵ
+33. factor -> variable | functionCall | intLit | floatLit | ( arithExpr ) | not factor| sign factor
+34. prefix -> idnest prefix | ϵ 
+35. variable -> prefix id varSelector
+36. varSelector -> indice varSelector | ϵ
+37. functionCall -> prefix id (aParams) 
+38. idnest -> idOrSelf identifier. | idOrSelf ( aParams ).
+39. identifier -> indice identifier | ϵ
+40. idOrSelf -> id | self
+41. indice -> [ arithExpr ]
+42. arraySize -> [ intLit ] | [ ]
+43. type -> integer | float | id
+44. returnType -> type | void
+45. fParams -> id : type arrLength fParamsCont | ϵ
+46. fParamsCont -> fParamsTail fParamsCont | ϵ
+47. aParams -> expr aParamsCont | ϵ
+48. aParamsCont -> aParamsTail aParamsCont | ϵ
+49. fParamsTail -> , id : type arrLength
+50. aParamsTail -> , expr
+51. assignOp -> :=
+52. relOp -> == | <> | < | > | <= | >=
+53. addOp -> + | - | or
+54. multOp -> * | / | and
