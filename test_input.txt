@@ -1,0 +1,18 @@
+class MyClass isa Interface1, Interface2 {
+    public func add(a: integer, b: integer) -> integer;
+    private construct(a: integer, b: integer) {
+        local x: integer;
+        x := a + b;
+        return(x);
+    }
+}
+
+implement MyImpl {
+    func myFunc() -> void;
+}
+
+func main() -> void {
+    local result: integer;
+    result := MyClass.add(5, 10);
+    write(result);
+}
